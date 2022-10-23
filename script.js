@@ -30,6 +30,14 @@ var mainEl = document.getElementById('quiz-area');
 
 var questionNumber = 0; // not sure if should define here
 
+var questionNumber = 0;
+
+var score=0;
+
+var previousAnswer; 
+
+var time;
+
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
     button2Begin.textContent = "Click to Begin";
@@ -42,6 +50,8 @@ function doQuiz() {
     
     if (questionNumber < questions.length) {
         
+    time = 60;
+
     var quizAreaP = document.createElement('p');
     
     var quizAreaChoices = document.createElement('div');
@@ -60,17 +70,16 @@ function doQuiz() {
 
             quizAreaChoices.appendChild(selectionButton);
 
-            /* if (i == questions.correct) {
-                selectionButton.setAttribute("selected-true", true);
-            }; */
-            
-        };
+            if (i == questions.correct) {
+                selectionButton.setAttribute('correct');      //Use this in check answers function 
+            };
+    };
     
     quizAreaChoices.addEventListener("click", checkAnswer);
     
     questionNumber++;
 
-    console.log(questionNumber);
+    console.log("quest number:" + questionNumber);
     }
 
     else {
@@ -78,10 +87,14 @@ function doQuiz() {
     }
 };
 
+function checkAnswer(event) {
 
-function checkAnswer() {
+    if (event.target.hasAttribute('correct')) {score++;} 
+    else {time = time - 10};
+
+    console.log("score:"+score);
+    
     doQuiz();  
 };
 
-
-init(); 
+init();  
