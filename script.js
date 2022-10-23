@@ -31,11 +31,6 @@ var mainEl = document.getElementById('quiz-area');
 var questionNumber = 0; // not sure if should define here
 
 function init() {
-
-if (questionNumber > questions.length) {
-        alert("finished quiZ!!");
-    }
-    
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
     button2Begin.textContent = "Click to Begin";
     mainEl.appendChild(button2Begin);
@@ -44,7 +39,9 @@ if (questionNumber > questions.length) {
 };
 
 function doQuiz() {
-
+    
+    if (questionNumber < questions.length) {
+        
     var quizAreaP = document.createElement('p');
     
     var quizAreaChoices = document.createElement('div');
@@ -74,9 +71,12 @@ function doQuiz() {
     questionNumber++;
 
     console.log(questionNumber);
-   
-};
+    }
 
+    else {
+        console.log("Finished!")
+    }
+};
 
 
 function checkAnswer() {
