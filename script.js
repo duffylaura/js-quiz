@@ -11,7 +11,7 @@ var questions = [
     },
     {
     question: "Arrays in JavaScript can be used to store ________________.",
-    answers: ["numbers and strings", "other arrays", "booleans", "all of the above"]
+    answers: ["numbers and strings", "other arrays", "booleans", "all of the above"],
     correct: 3
     },
     {
@@ -26,30 +26,62 @@ var questions = [
     }
 ];
 
-var quizAreaEl = document.getElementById('quiz-area');
+var mainEl = document.getElementById('quiz-area');
 
-function init = {
-    var button2Begin = document.createElement("button"); //create a button that will start the quiz
+var questionNumber = 0; // not sure if should define here
+
+function init() {
+
+if (questionNumber > questions.length) {
+        alert("finished quiZ!!");
+    }
+    
+    var button2Begin = document.createElement('button'); //create a button that will start the quiz
     button2Begin.textContent = "Click to Begin";
-    quizAreaEl.appendChild(button2Begin);
+    mainEl.appendChild(button2Begin);
     
     button2Begin.addEventListener('click', doQuiz);
 };
 
-function doQuiz = {
-    quizAreaEl.textContent = questions.question; 
+function doQuiz() {
 
-    for (let i = 0; i < question.answers.length; i++) {
-        var selectAnswer = document.createElement('button');
-        selectAnswer.textContent = question.answers[i];
-        
-        if (i == question.correct) {
-            selectAnswer.setAttribute("data-correct-answer", true)
-        }
-        answersEl.appendChild(selectAnswer)
-    }
+    var quizAreaP = document.createElement('p');
+    
+    var quizAreaChoices = document.createElement('div');
+   
+    mainEl.appendChild(quizAreaP);
+    
+    mainEl.appendChild(quizAreaChoices);
 
+    quizAreaP.textContent = questions[questionNumber].question; 
+    
+    for (i = 0; i < (questions[questionNumber].answers.length); i++) { //create buttons dynamically for choices
+            
+            var selectionButton = document.createElement('button');
+            
+            selectionButton.textContent = questions[questionNumber].answers[i];
 
+            quizAreaChoices.appendChild(selectionButton);
+
+            /* if (i == questions.correct) {
+                selectionButton.setAttribute("selected-true", true);
+            }; */
+            
+        };
+    
+    quizAreaChoices.addEventListener("click", checkAnswer);
+    
+    questionNumber++;
+
+    console.log(questionNumber);
+   
 };
 
-init (); 
+
+
+function checkAnswer() {
+    doQuiz();  
+};
+
+
+init(); 
