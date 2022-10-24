@@ -28,6 +28,8 @@ var questions = [
 
 var mainEl = document.getElementById('quiz-area');
 
+var headerEl = document.getElementById('header');
+
 var questionNumber = 0; // not sure if should define here
 
 var questionNumber = 0;
@@ -36,22 +38,39 @@ var score=0;
 
 var previousAnswer; 
 
-var time;
+var time = 60;
 
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
     button2Begin.textContent = "Click to Begin";
     mainEl.appendChild(button2Begin);
     
-    button2Begin.addEventListener('click', doQuiz);
+    button2Begin.addEventListener('click', startQuiz);
+};
+
+function startQuiz() { // create timer when button2Begin is clicked
+
+    var countdown = document.createElement('timer');
+
+    timerInterval = setInterval (function () {
+        time--; 
+        countdown.textContent = time + "seconds remaining"; 
+
+        if (time === 0) {
+            clearInterval(timerInterval);
+            endQuiz();
+        };
+    }, 1000);
+
+    headerEl.appendChild(countdown);
+
+    doQuiz(); 
 };
 
 function doQuiz() {
     
     if (questionNumber < questions.length) {
         
-    time = 60;
-
     var quizAreaP = document.createElement('p');
     
     var quizAreaChoices = document.createElement('div');
@@ -95,6 +114,10 @@ function checkAnswer(event) {
     console.log("score:"+score);
     
     doQuiz();  
+};
+
+function endQuiz () {
+    prompt("End of quiz!");
 };
 
 init();  
