@@ -38,6 +38,8 @@ var score=0;
 
 var time = 60;
 
+var QuizTakersArray = [];
+
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
     button2Begin.textContent = "Click to Begin";
@@ -53,15 +55,7 @@ function startQuiz() { // create timer when button2Begin is clicked
     timerInterval = setInterval (function () {
         time--; 
         countdown.textContent = time + "seconds remaining"; 
-
-       /*
-        if (time === 0) {
-            clearInterval(timerInterval);
-            endQuiz();
-        };
-        */
-
-
+        if (time === 0) {endQuiz(); };  // If user times out of quiz, will go to endQuiz 
     }, 1000);
 
     headerEl.appendChild(countdown);
@@ -90,9 +84,9 @@ function doQuiz() {
             selectionButton.textContent = questions[questionNumber].answers[i];
 
             quizAreaChoices.appendChild(selectionButton);
-
-            if (i == questions.correct) {
-                selectionButton.setAttribute('correct');      //Use this in check answers function > storing which index is correct? But not working (see below)
+            
+            if (i == questions[questionNumber].correct) {
+                selectionButton.setAttribute('class', 'true');      //Use this in check answers function > storing which index is correct? But not working (see below)
             };
     };
     
@@ -111,7 +105,7 @@ function doQuiz() {
 
 function checkAnswer(event) {
 
-    if (event.target.hasAttribute('correct')) {score++;} //Not connecting to score variable; think there is something with "event" usage
+    if (event.target.classList.contains('true')) {score++;} //Not connecting to score variable; think there is something with "event" usage
     else {time = time - 10};
 
     console.log("score:"+score);
@@ -120,10 +114,26 @@ function checkAnswer(event) {
 };
 
 function endQuiz () {
-    prompt ("You finished the quiz!");
+    clearInterval(timerInterval); //This stops the timer 
+    alert ("You finished the quiz! Your score is " + score + ". Your time was " + (60-time)+ " seconds!");
+    quizTaker = prompt ("Enter your name below: ");
+        if (!quizTaker) {
+            alert("Please enter something!!!!") 
+            quizTaker = prompt ("Enter your name below: ")
+        }; 
     
-    clearInterval(timerInterval); //This stops the timer but it doesn't drop the timer countdown to 0 
-   
+    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds! -- "
+
+    QuizTakersArray.push(save); 
+
+    localStorage.setItem("scores", QuizTakersArray);
+    
+    alertScores(); 
 };
+
+function alertScores(){
+    var scores = localStorage.getItem("scores"); 
+    alert(scores);
+  };
 
 init();  
