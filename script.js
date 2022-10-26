@@ -36,8 +36,6 @@ var questionNumber = 0;
 
 var score=0;
 
-var previousAnswer; 
-
 var time = 60;
 
 function init() {
@@ -56,10 +54,14 @@ function startQuiz() { // create timer when button2Begin is clicked
         time--; 
         countdown.textContent = time + "seconds remaining"; 
 
+       /*
         if (time === 0) {
             clearInterval(timerInterval);
             endQuiz();
         };
+        */
+
+
     }, 1000);
 
     headerEl.appendChild(countdown);
@@ -90,7 +92,7 @@ function doQuiz() {
             quizAreaChoices.appendChild(selectionButton);
 
             if (i == questions.correct) {
-                selectionButton.setAttribute('correct');      //Use this in check answers function 
+                selectionButton.setAttribute('correct');      //Use this in check answers function > storing which index is correct? But not working (see below)
             };
     };
     
@@ -103,12 +105,13 @@ function doQuiz() {
 
     else {
         console.log("Finished!")
+        endQuiz(); 
     }
 };
 
 function checkAnswer(event) {
 
-    if (event.target.hasAttribute('correct')) {score++;} 
+    if (event.target.hasAttribute('correct')) {score++;} //Not connecting to score variable; think there is something with "event" usage
     else {time = time - 10};
 
     console.log("score:"+score);
@@ -117,7 +120,10 @@ function checkAnswer(event) {
 };
 
 function endQuiz () {
-    prompt("End of quiz!");
+    prompt ("You finished the quiz!");
+    
+    clearInterval(timerInterval); //This stops the timer but it doesn't drop the timer countdown to 0 
+   
 };
 
 init();  
