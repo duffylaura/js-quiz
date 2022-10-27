@@ -122,7 +122,7 @@ function endQuiz () {
             quizTaker = prompt ("Enter your name below: ")
         }; 
     
-    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds! -- "
+    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" //maybe "add to list? dynamically generate list? make an HTML page"
 
     QuizTakersArray.push(save); 
 
