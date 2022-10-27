@@ -26,19 +26,21 @@ var questions = [
     }
 ];
 
+//Global Variables 
+
 var mainEl = document.getElementById('quiz-area');
 
 var headerEl = document.getElementById('header');
 
-var questionNumber = 0; // not sure if should define here
+var scoreEl = document.getElementById('score-area');
 
-var questionNumber = 0;
+var questionNumber = 0; 
 
 var score=0;
 
 var time = 60;
 
-var QuizTakersArray = [];
+var quizTakersArray = [];
 
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
@@ -48,9 +50,25 @@ function init() {
     button2Begin.addEventListener('click', startQuiz);
 };
 
-function startQuiz() { // create timer when button2Begin is clicked
+function startQuiz(event) { 
+
+    // get previous scores from storage, show below quiz
+    
+    event.preventDefault(); 
+
+    var previousScores = localStorage.getItem('scores'); 
+
+    var scoreAreaP = document.createElement('p');
+
+    scoreEl.appendChild(scoreAreaP); 
+
+    var previousScoresHeading = "Previous Scores: "; 
+
+    scoreAreaP.textcontent = previousScoresHeading; 
 
     var countdown = document.createElement('timer');
+
+    // create timer
 
     timerInterval = setInterval (function () {
         time--; 
@@ -124,16 +142,20 @@ function endQuiz () {
     
     var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" //maybe "add to list? dynamically generate list? make an HTML page"
 
-    QuizTakersArray.push(save); 
+    quizTakersArray.push(save); 
 
-    localStorage.setItem("scores", QuizTakersArray);
-    
-    alertScores(); 
+    localStorage.setItem("scores", quizTakersArray);
+
+    displayNewScore(); 
 };
 
-function alertScores(){
-    var scores = localStorage.getItem("scores"); 
-    alert(scores);
-  };
+function displayNewScore() {
+
+    var previousScoresHeading = "Previous Scores: "
+
+    scoreAreaP.textcontent = previousScoresHeading + quizTakersArray; 
+
+
+}
 
 init();  
