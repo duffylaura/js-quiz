@@ -32,15 +32,13 @@ var mainEl = document.getElementById('quiz-area');
 
 var headerEl = document.getElementById('header');
 
-var scoreEl = document.getElementById('score-area');
+var footerEl = document.getElementById('score-area');
 
 var questionNumber = 0; 
 
 var score=0;
 
 var time = 60;
-
-var quizTakersArray = [];
 
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
@@ -50,25 +48,9 @@ function init() {
     button2Begin.addEventListener('click', startQuiz);
 };
 
-function startQuiz(event) { 
-
-    // get previous scores from storage, show below quiz
-    
-    event.preventDefault(); 
-
-    var previousScores = localStorage.getItem('scores'); 
-
-    var scoreAreaP = document.createElement('p');
-
-    scoreEl.appendChild(scoreAreaP); 
-
-    var previousScoresHeading = "Previous Scores: "; 
-
-    scoreAreaP.textcontent = previousScoresHeading; 
-
+function startQuiz() {  
+// create timer
     var countdown = document.createElement('timer');
-
-    // create timer
 
     timerInterval = setInterval (function () {
         time--; 
@@ -76,8 +58,8 @@ function startQuiz(event) {
         if (time === 0) {endQuiz(); };  // If user times out of quiz, will go to endQuiz 
     }, 1000);
 
-    headerEl.appendChild(countdown);
-
+    headerEl.appendChild(countdown);    
+// 
     doQuiz(); 
 };
 
@@ -123,7 +105,7 @@ function doQuiz() {
 
 function checkAnswer(event) {
 
-    if (event.target.classList.contains('true')) {score++;} //Not connecting to score variable; think there is something with "event" usage
+    if (event.target.classList.contains('true')) {score++;} //if correct adds to score, else detracts time
     else {time = time - 10};
 
     console.log("score:"+score);
@@ -134,28 +116,36 @@ function checkAnswer(event) {
 function endQuiz () {
     clearInterval(timerInterval); //This stops the timer 
     alert ("You finished the quiz! Your score is " + score + ". Your time was " + (60-time)+ " seconds!");
-    quizTaker = prompt ("Enter your name below: ");
+    var quizTaker = prompt ("Enter your name below: ");
         if (!quizTaker) {
             alert("Please enter something!!!!") 
             quizTaker = prompt ("Enter your name below: ")
         }; 
     
-    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" //maybe "add to list? dynamically generate list? make an HTML page"
+    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" 
 
-    quizTakersArray.push(save); 
+    
 
-    localStorage.setItem("scores", quizTakersArray);
+    if (scores != '') {
+        var scores = localStorage.getItem('scores');
+            scores = JSON.parse(scores);
+            scores.push(save);
+        }
+        else {
+        var scores = save; 
+        };
 
-    displayNewScore(); 
+    localStorage.setItem ('scores', scores);
+
+    showScores(); 
+
+function showScores() {
+    var displayScores = document.createElement('div');
+    var showScores = JSON.parse(scores);
+    displayScores.textContent = showScores; 
+    footerEl.appendChild(displayScores);
 };
 
-function displayNewScore() {
-
-    var previousScoresHeading = "Previous Scores: "
-
-    scoreAreaP.textcontent = previousScoresHeading + quizTakersArray; 
-
-
-}
+};
 
 init();  
