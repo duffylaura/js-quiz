@@ -123,28 +123,26 @@ function endQuiz () {
         }; 
     
     var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" 
-
+   
+    var savedScores = localStorage.getItem('scores');
     
-
-    if (scores != '') {
-        var scores = localStorage.getItem('scores');
-            scores = JSON.parse(scores);
-            scores.push(save);
-        }
-        else {
-        var scores = save; 
-        };
-
-    localStorage.setItem ('scores', scores);
+    if (savedScores = null) {
+            savedScores = save; 
+    }
+    else {
+        savedScores.push(save);
+    }
+        
+    localStorage.setItem ('scores', savedScores);
 
     showScores(); 
 
-function showScores() {
-    var displayScores = document.createElement('div');
-    var showScores = JSON.parse(scores);
-    displayScores.textContent = showScores; 
-    footerEl.appendChild(displayScores);
-};
+    function showScores() {
+        var displayScores = document.createElement('div');
+        var showScores = JSON.parse(savedScores);
+        displayScores.textContent = showScores; 
+        footerEl.appendChild(displayScores);
+    };
 
 };
 
