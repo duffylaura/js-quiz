@@ -59,7 +59,6 @@ function startQuiz() {
     }, 1000);
 
     headerEl.appendChild(countdown);    
-// 
     doQuiz(); 
 };
 
@@ -115,35 +114,31 @@ function checkAnswer(event) {
 
 function endQuiz () {
     clearInterval(timerInterval); //This stops the timer 
-    alert ("You finished the quiz! Your score is " + score + ". Your time was " + (60-time)+ " seconds!");
+    alert ("You finished the quiz! Your score is " + score + ". Your time was " + (60-time)+ " seconds!"); //Local storage
     var quizTaker = prompt ("Enter your name below: ");
         if (!quizTaker) {
             alert("Please enter something!!!!") 
             quizTaker = prompt ("Enter your name below: ")
         }; 
     
-    var save = quizTaker + " scored " + score + " out of 5 in " + (60-time)+ " seconds!" 
+    var save = `${quizTaker} scored ${score} out of 5 in ${60-time} seconds!` 
    
-    var savedScores = localStorage.getItem('scores');
-    
-    if (savedScores = null) {
-            savedScores = save; 
-    }
-    else {
-        savedScores.push(save);
-    }
-        
-    localStorage.setItem ('scores', savedScores);
+    var savedScores = JSON.parse(localStorage.getItem('scores')) || [];
 
-    showScores(); 
+    console.log(savedScores);
 
-    function showScores() {
+    savedScores.push(save);
+      
+    localStorage.setItem ('scores', JSON.stringify(savedScores));
+
+    showScores(savedScores); 
+};
+
+    function showScores(savedScores) {
         var displayScores = document.createElement('div');
-        var showScores = JSON.parse(savedScores);
-        displayScores.textContent = showScores; 
+       // var showScores = JSON.parse(savedScores);
+        displayScores.textContent = savedScores; 
         footerEl.appendChild(displayScores);
     };
-
-};
 
 init();  
