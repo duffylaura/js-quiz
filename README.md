@@ -25,6 +25,8 @@
   To use, click the "begin" button. You will then be presented with the first question. After you click on the button to select your first answer, you then be presented with the second question. This process will continue for five questions. 
   
   After you answer the final question, an alert will appear tell you your score and the amount of time you completed it in. Be careful -- You only have 60 seconds to complete the quiz and you loose ten seconds for every wrong answer! 
+
+  ![Demo Gif](Demo.gif)
   
   You will then be prompted to enter your initials or name and your high score, the time you completed it in, and your initals/name will be saved to local storage and displayed below the end of the quiz in a dynamically generated "Previous Scores" section. 
     
