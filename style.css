@@ -1,0 +1,34 @@
+:root {
+    --background: #C4E8BA;
+    --text: #586954;
+    --button: #CEF5C4;
+    --highlight: #8FEBF5;
+    --scoreText: #001169; 
+}
+
+body {
+    color: var(--text);
+    background-color: var(--background); 
+}
+
+header {
+    background-color: var(--background);
+}
+
+.button {
+    background-color: var(--button);
+    color: var(--text);
+}
+
+.button ::selection {
+    background-color: var(--highlight); 
+}
+
+.heading {
+    color: var(--scoreText);
+}
+
+.displayScores {
+    color: var(--scoreText);
+
+}

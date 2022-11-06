@@ -32,6 +32,8 @@ var mainEl = document.getElementById('quiz-area');
 
 var headerEl = document.getElementById('header');
 
+var divEl = document.getElementById('score-area-heading');
+
 var footerEl = document.getElementById('score-area');
 
 var questionNumber = 0; 
@@ -42,6 +44,7 @@ var time = 60;
 
 function init() {
     var button2Begin = document.createElement('button'); //create a button that will start the quiz
+    button2Begin.className = "button";
     button2Begin.textContent = "Click to Begin";
     mainEl.appendChild(button2Begin);
     
@@ -79,7 +82,7 @@ function doQuiz() {
     for (i = 0; i < (questions[questionNumber].answers.length); i++) { //create buttons dynamically for choices
             
             var selectionButton = document.createElement('button');
-            
+
             selectionButton.textContent = questions[questionNumber].answers[i];
 
             quizAreaChoices.appendChild(selectionButton);
@@ -121,7 +124,7 @@ function endQuiz () {
             quizTaker = prompt ("Enter your name below: ")
         }; 
     
-    var save = `${quizTaker} scored ${score} out of 5 in ${60-time} seconds!` 
+    var save = ` ${quizTaker} scored ${score} out of 5 in ${60-time} seconds!` 
    
     var savedScores = JSON.parse(localStorage.getItem('scores')) || [];
 
@@ -135,8 +138,13 @@ function endQuiz () {
 };
 
     function showScores(savedScores) {
+        var heading = document.createElement('h1');
+        heading.className = "heading";
+        heading.textContent = "Previous Scores:"; 
+        divEl.appendChild (heading);
+        
         var displayScores = document.createElement('div');
-       // var showScores = JSON.parse(savedScores);
+        displayScores.className = "displayScores";
         displayScores.textContent = savedScores; 
         footerEl.appendChild(displayScores);
     };
